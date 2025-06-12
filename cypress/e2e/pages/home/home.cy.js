@@ -54,6 +54,8 @@ class HomePage extends BasePage {
     getCarouselContainer() {
         return this.getElement(this.carouselContainer);
     }
+
+    // No navigation methods needed for this approach
 }
 
 describe('Home Page Tests', () => {
@@ -108,6 +110,24 @@ describe('Home Page Tests', () => {
             CATEGORY_LIST.forEach(category => {
                 const escapedCategory = category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 cy.get(homePage.categoryItems).contains(new RegExp(escapedCategory, 'i')).should('be.visible');
+            });
+        });
+
+        it('should verify all category links are clickable and return 200 status', () => {
+            // Open the dropdown
+            homePage.openCategoryDropdown();
+
+            // Get all category links and verify their href responses
+            cy.get(homePage.categoryItems).find('a').each(($a) => {
+                const href = $a.prop('href');
+                if (href) {
+                    cy.request(href).its('status').should('eq', 200);
+                }
+                
+                // Verify the element is clickable (has pointer events)
+                cy.wrap($a)
+                    .should('be.visible')
+                    .should('have.css', 'pointer-events', 'auto');
             });
         });
     });
