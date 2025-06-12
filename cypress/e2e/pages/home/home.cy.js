@@ -1,5 +1,5 @@
 import BasePage from '../Base/BasePage';
-import { HOME_PAGE_SELECTORS as SELECTORS } from './constants';
+import { HOME_PAGE_SELECTORS as SELECTORS, CATEGORY_LIST } from './constants';
 
 class HomePage extends BasePage {
     constructor() {
@@ -14,6 +14,12 @@ class HomePage extends BasePage {
         this.carouselContainer = SELECTORS.CAROUSEL.CONTAINER;
         this.carouselPrevButton = SELECTORS.CAROUSEL.PREV_BUTTON;
         this.carouselNextButton = SELECTORS.CAROUSEL.NEXT_BUTTON;
+
+        // Category dropdown
+        this.categoryDropdown = SELECTORS.CATEGORY.DROPDOWN;
+        this.topCategoriesHeading = SELECTORS.CATEGORY.TOP_CATEGORIES_HEADING;
+        this.categoryList = SELECTORS.CATEGORY.CATEGORY_LIST;
+        this.categoryItems = SELECTORS.CATEGORY.CATEGORY_ITEMS;
     }
 
     visit() {
@@ -31,6 +37,10 @@ class HomePage extends BasePage {
 
     openMyAccount() {
         this.click(this.myAccountDropdown);
+    }
+
+    openCategoryDropdown() {
+        this.click(this.categoryDropdown);
     }
 
     clickNextCarousel() {
@@ -70,6 +80,36 @@ describe('Home Page Tests', () => {
         
         // Verify search results - you can expand this based on the actual page structure
         cy.url().should('include', 'search=' + searchTerm);
+    });
+
+    describe('Category Navigation', () => {
+        it('should display and interact with Shop by Category dropdown', () => {
+            // Verify the category dropdown is visible
+            homePage.shouldBeVisible(homePage.categoryDropdown);
+
+            // Verify the text content
+            homePage.shouldContainText(homePage.categoryDropdown, 'Shop by Category');
+
+            // Click the dropdown
+            homePage.openCategoryDropdown();
+
+            // Verify the Top categories heading is visible after clicking
+            homePage.shouldBeVisible(homePage.topCategoriesHeading);
+            homePage.shouldContainText(homePage.topCategoriesHeading, 'Top categories');
+
+            // Verify all 16 category options are present and have correct text
+            // Verify the category list is visible
+            homePage.shouldBeVisible(homePage.categoryList);
+
+            // Verify we have exactly 16 category items
+            cy.get(homePage.categoryItems).should('have.length', 16);
+
+            // Verify each category text using case-insensitive matching
+            CATEGORY_LIST.forEach(category => {
+                const escapedCategory = category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                cy.get(homePage.categoryItems).contains(new RegExp(escapedCategory, 'i')).should('be.visible');
+            });
+        });
     });
 
     describe('Carousel Navigation', () => {
