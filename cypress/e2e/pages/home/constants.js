@@ -40,3 +40,20 @@ export const HOME_PAGE_SELECTORS = {
         DROPDOWN: '.dropdown-toggle[href="https://ecommerce-playground.lambdatest.io/index.php?route=account/account"]'
     }
 };
+
+export const SELECTORS = {
+    // ...existing code...
+    CAROUSEL_CONTAINER: '[data-cy="main-carousel"]',
+    CAROUSEL_NEXT: '[data-cy="carousel-next"]',
+    CAROUSEL_PREV: '[data-cy="carousel-prev"]',
+    CATEGORY_DROPDOWN: '[data-cy="category-dropdown"]',
+    CATEGORY_ITEMS: '[data-cy="category-items"]',
+    SEARCH_INPUT: '[data-cy="search-input"]',
+    // ...existing code...
+};
+
+export const TIMEOUTS = {
+    ANIMATION: 5000,
+    NETWORK: 10000,
+    TRANSITION: 2000
+};
