@@ -1,13 +1,14 @@
-import BasePage from './BasePage';
+import BasePage from '../Base/BasePage';
+import { HOME_PAGE_SELECTORS as SELECTORS } from './constants';
 
 class HomePage extends BasePage {
     constructor() {
         super();
         // Selectors
-        this.searchInput = '#search input';
-        this.searchButton = '#search button';
-        this.cartButton = '#cart';
-        this.myAccountDropdown = '.dropdown-toggle[href="https://ecommerce-playground.lambdatest.io/index.php?route=account/account"]';
+        this.searchInput = SELECTORS.SEARCH.INPUT;
+        this.searchButton = SELECTORS.SEARCH.BUTTON;
+        this.cartButton = SELECTORS.CART.BUTTON;
+        this.myAccountDropdown = SELECTORS.ACCOUNT.DROPDOWN;
     }
 
     visit() {
