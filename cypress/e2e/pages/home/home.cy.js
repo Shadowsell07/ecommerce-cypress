@@ -9,6 +9,11 @@ class HomePage extends BasePage {
         this.searchButton = SELECTORS.SEARCH.BUTTON;
         this.cartButton = SELECTORS.CART.BUTTON;
         this.myAccountDropdown = SELECTORS.ACCOUNT.DROPDOWN;
+        
+        // Carousel selectors
+        this.carouselContainer = SELECTORS.CAROUSEL.CONTAINER;
+        this.carouselPrevButton = SELECTORS.CAROUSEL.PREV_BUTTON;
+        this.carouselNextButton = SELECTORS.CAROUSEL.NEXT_BUTTON;
     }
 
     visit() {
@@ -26,6 +31,18 @@ class HomePage extends BasePage {
 
     openMyAccount() {
         this.click(this.myAccountDropdown);
+    }
+
+    clickNextCarousel() {
+        this.click(this.carouselNextButton);
+    }
+
+    clickPrevCarousel() {
+        this.click(this.carouselPrevButton);
+    }
+
+    getCarouselContainer() {
+        return this.getElement(this.carouselContainer);
     }
 }
 
@@ -53,5 +70,24 @@ describe('Home Page Tests', () => {
         
         // Verify search results - you can expand this based on the actual page structure
         cy.url().should('include', 'search=' + searchTerm);
+    });
+
+    describe('Carousel Navigation', () => {
+        it('should navigate through carousel using arrow buttons', () => {
+            // Verify carousel is visible
+            homePage.shouldBeVisible(homePage.carouselContainer);
+            
+            // Force click the buttons since they're hidden until hover
+            cy.get(homePage.carouselNextButton).click({ force: true });
+            
+            // Wait for transition and verify we're on the second slide
+            cy.get('.carousel-item.active').should('be.visible');
+            
+            // Click previous
+            cy.get(homePage.carouselPrevButton).click({ force: true });
+            
+            // Verify we're back to the first slide
+            cy.get('.carousel-item.active').should('be.visible');
+        });
     });
 });

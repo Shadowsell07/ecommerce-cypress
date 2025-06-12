@@ -3,6 +3,11 @@ export const HOME_PAGE_SELECTORS = {
         INPUT: '[aria-label="Search For Products"]:first',
         BUTTON: '.search-button:first'
     },
+    CAROUSEL: {
+        CONTAINER: '.carousel.slide:first',
+        PREV_BUTTON: '.carousel-control-prev:first',
+        NEXT_BUTTON: '.carousel-control-next:first'
+    },
     CART: {
         BUTTON: '[data-id="217825"]'
     },
