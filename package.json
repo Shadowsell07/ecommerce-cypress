@@ -1,0 +1,20 @@
+{
+  "name": "ecommerce-cypress",
+  "version": "1.0.0",
+  "description": "Practice cypress framework for testing a fake ecommerce site",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "cypress run",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox",
+    "test:headed": "cypress run --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^14.4.1"
+  }
+}
